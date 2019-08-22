@@ -14,4 +14,6 @@ server.get('/', (req, res) => res.json({
   success: true
 }));
 
+server.use('/api', require('./routes'));
+
 module.exports = server;
