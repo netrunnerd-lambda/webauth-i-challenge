@@ -5,6 +5,8 @@ router.get('/', (req, res) => res.json({
   success: true
 }));
 
+router.use('/login', require('./login'));
+router.use('/register', require('./register'));
 router.use('/users', require('./users'));
 
 module.exports = router;
