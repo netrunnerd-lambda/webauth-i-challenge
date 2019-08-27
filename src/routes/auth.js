@@ -1,29 +1,15 @@
 const bcrypt = require('bcrypt');
 const router = require('express').Router();
 const users = require('../models/users');
+const { validate } = require('../middleware');
 
-router.post('/login', async (req, res) => {
-  try {
-    const { username, password } = req.body;
-    const user = await users.list(username);
+router.post('/login', validate, (req, res) => {
+  const { username } = req.headers;
 
-    if (user && bcrypt.compareSync(password, user.password)) {
-      return res.json({
-        message: `Welcome ${username}.`,
-        success: true
-      });
-    }
-
-    return res.status(401).json({
-      message: "Invalid creds, sun.",
-      success: false
-    });
-  } catch (error) {
-    return res.status(500).json({
-      message: "#nope",
-      success: false
-    })
-  }
+  return res.json({
+    message: `Welcome, ${username}...`,
+    success: true
+  });
 });
 
 router.post('/register', async (req, res) => {

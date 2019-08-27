@@ -3,6 +3,11 @@
 GET {{endpoint}}
 
 ###
+GET {{endpoint}}/users
+username: Jesus2
+password: jesusroolz
+
+###
 POST {{endpoint}}/register
 Content-Type: application/json
 
@@ -12,10 +17,6 @@ Content-Type: application/json
 }
 
 ###
-POST {{endpoint}}/login
-Content-Type: application/json
-
-{
-  "username": "Jesus",
-  "password": "jesusroolz"
-}
+POST {{endpoint}}/auth/login
+username: Jesus
+password: jesusroolz
