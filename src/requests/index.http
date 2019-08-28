@@ -1,0 +1,27 @@
+@endpoint = http://localhost:5000/api
+
+GET {{endpoint}}
+
+###
+GET {{endpoint}}/users
+
+###
+POST {{endpoint}}/auth/register
+Content-Type: application/json
+
+{
+  "username": "ausername",
+  "password": "jesusroolz"
+}
+
+###
+POST {{endpoint}}/auth/login
+Content-Type: application/json
+
+{
+  "username": "ausername",
+  "password": "jesusroolz"
+}
+
+###
+DELETE {{endpoint}}/auth/logout
