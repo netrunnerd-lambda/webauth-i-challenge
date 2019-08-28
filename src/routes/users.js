@@ -3,8 +3,6 @@ const users = require('../models/users');
 const { validate } = require('../middleware');
 
 router.get('/', validate, async (req, res) => {
-  const { username } = req.headers;
-
   try {
     const list = await users.list();
 
@@ -16,7 +14,7 @@ router.get('/', validate, async (req, res) => {
     }
 
     return res.json({
-      user: username,
+      user: req.session.user,
       users: list,
       success: true
     });

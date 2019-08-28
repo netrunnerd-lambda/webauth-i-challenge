@@ -4,19 +4,21 @@ GET {{endpoint}}
 
 ###
 GET {{endpoint}}/users
-username: Jesus2
-password: jesusroolz
 
 ###
-POST {{endpoint}}/register
+POST {{endpoint}}/auth/register
 Content-Type: application/json
 
 {
-  "username": "Jesus2",
+  "username": "ausername",
   "password": "jesusroolz"
 }
 
 ###
 POST {{endpoint}}/auth/login
-username: Jesus
-password: jesusroolz
+Content-Type: application/json
+
+{
+  "username": "ausername",
+  "password": "jesusroolz"
+}

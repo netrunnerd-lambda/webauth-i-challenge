@@ -1,15 +1,40 @@
 const bcrypt = require('bcrypt');
 const router = require('express').Router();
 const users = require('../models/users');
-const { validate } = require('../middleware');
 
-router.post('/login', validate, (req, res) => {
-  const { username } = req.headers;
+router.post('/login', async (req, res) => {
+  const { username, password } = req.body;
 
-  return res.json({
-    message: `Welcome, ${username}...`,
-    success: true
-  });
+  if (!username || !password) {
+    return res.status(400).json({
+      message: "Missing credentials.",
+      success: false
+    });
+  }
+
+  try {
+    const user = await users.list(username);
+    
+    if (user && bcrypt.compareSync(password, user.password)) {
+      req.session.user = username;
+
+      return res.json({
+        message: `Welcome ${username}... get you a cookie.`,
+        success: true
+      });
+    } else {
+      return res.status(401).json({
+        message: "Invalid credentials, son.",
+        success: false
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      error,
+      message: "#nope",
+      success: false
+    });
+  }
 });
 
 router.post('/register', async (req, res) => {
