@@ -20,6 +20,7 @@ router.post('/login', async (req, res) => {
 
       return res.json({
         message: `Welcome ${username}... get you a cookie.`,
+        session: req.session,
         success: true
       });
     } else {
@@ -34,6 +35,26 @@ router.post('/login', async (req, res) => {
       message: "#nope",
       success: false
     });
+  }
+});
+
+router.delete('/logout', (req, res) => {
+  if (req.session) {
+    return req.session.destroy(error => {
+      if (error) {
+        return res.status(500).json({
+          message: "Oh noes! Session could not be destroyed.",
+          success: false
+        });
+      }
+
+      return res.json({
+        message: "YEET! Gottem.",
+        success: true
+      });
+    });
+  } else {
+    res.end();
   }
 });
 
