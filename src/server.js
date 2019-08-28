@@ -3,6 +3,7 @@ const helmet = require('helmet');
 const json = express.json;
 const morgan = require('morgan');
 const session = require('express-session');
+const sessionStore = require('connect-session-knex')(session);
 
 const server = express();
 
@@ -14,7 +15,14 @@ const seshOpts = {
   name: 'seshid',
   resave: false,
   saveUninitialized: false,
-  secret: 'ilikeunicornsbecauseilikeunicornsokay'
+  secret: 'ilikeunicornsbecauseilikeunicornsokay',
+  store: new sessionStore({
+    clearInterval: 1000 * 60 * 60,
+    createtable: true,
+    knex: require('./database'),
+    sidfieldname: 'sid',
+    tablename: 'sessions'
+  })
 };
 
 server.use(helmet());
